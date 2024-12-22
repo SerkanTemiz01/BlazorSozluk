@@ -14,12 +14,15 @@ namespace BlazorSozluk.Api.Infrastructure.Persistence.Extensions
     {
         public static IServiceCollection AddInfrastructureRegistration(this IServiceCollection services,IConfiguration configuration)
         {
-            var connStr = configuration["BlazorSozlukDbConnecitonString"].ToString();
+            var connStr = configuration["BlazorSozlukDbConnectionString"].ToString();
             services.AddDbContext<BlazorSozlukContext>(conf =>
             {
                 
                 conf.UseSqlServer(connStr, opt => { opt.EnableRetryOnFailure(); });
             });
+
+            // var seedData = new SeedData();
+            //seedData.SeedAsync(configuration).GetAwaiter().GetResult();
             return services;
         }
     }

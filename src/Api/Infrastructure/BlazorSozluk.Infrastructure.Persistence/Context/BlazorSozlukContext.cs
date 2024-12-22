@@ -16,7 +16,7 @@ namespace BlazorSozluk.Api.Infrastructure.Persistence.Context
         {
             
         }
-        public BlazorSozlukContext(DbContextOptions<BlazorSozlukContext> options) : base(options)
+        public BlazorSozlukContext(DbContextOptions options) : base(options)
         {
 
         }
