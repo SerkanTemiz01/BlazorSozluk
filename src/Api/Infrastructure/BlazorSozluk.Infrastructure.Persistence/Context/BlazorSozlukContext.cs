@@ -7,11 +7,15 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlazorSozluk.Infrastructure.Persistence.Context
+namespace BlazorSozluk.Api.Infrastructure.Persistence.Context
 {
     public class BlazorSozlukContext:DbContext
     {
         public const string DEFAULT_SCHEMA = "dbo";
+        public BlazorSozlukContext()
+        {
+            
+        }
         public BlazorSozlukContext(DbContextOptions<BlazorSozlukContext> options) : base(options)
         {
 
@@ -25,6 +29,16 @@ namespace BlazorSozluk.Infrastructure.Persistence.Context
         public DbSet<EntryCommentFavorite> EntryCommentFavorites { get; set; }
         public DbSet<EntryCommentVote> EntryCommentVotes { get; set; }
         public DbSet<EmailConfirmation> EmailConfirmation { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if(!optionsBuilder.IsConfigured)
+            {
+                var connStr = "Data Source=localhost\\MSSQLSERVER2019;Initial Catalog=blazorsozluk;Integrated Security=True;TrustServerCertificate=True;";
+               optionsBuilder.UseSqlServer(connStr,opt=>opt.EnableRetryOnFailure());
+            }
+            
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
