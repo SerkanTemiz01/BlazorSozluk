@@ -1,4 +1,6 @@
-﻿using BlazorSozluk.Api.Infrastructure.Persistence.Context;
+﻿using BlazorSozluk.Api.Application.Interfaces.Repositories;
+using BlazorSozluk.Api.Infrastructure.Persistence.Context;
+using BlazorSozluk.Api.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BlazorSozluk.Api.Infrastructure.Persistence.Extensions
 {
-    public static class Registraiton
+    public static class Registration
     {
         public static IServiceCollection AddInfrastructureRegistration(this IServiceCollection services,IConfiguration configuration)
         {
@@ -23,6 +25,11 @@ namespace BlazorSozluk.Api.Infrastructure.Persistence.Extensions
 
             // var seedData = new SeedData();
             //seedData.SeedAsync(configuration).GetAwaiter().GetResult();
+
+            services.AddScoped<IUserRepository,UserRepository>();
+            services.AddScoped<IEntryRepository, EntryRepository>();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
             return services;
         }
     }
