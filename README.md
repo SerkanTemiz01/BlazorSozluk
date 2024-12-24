@@ -23,3 +23,13 @@ Abstracts data access code, so the business logic layer does not directly intera
 
 ### 4.Reusable:
 Once implemented, the repository can be used for multiple entities, reducing redundant code.
+
+#                                   CQRS
+The CQRS (Command Query Responsibility Segregation) pattern is a design pattern used in software architecture to separate the responsibility of reading data (queries) from the responsibility of writing data (commands). This separation allows each operation to be optimized independently and provides greater scalability, maintainability, and clarity in complex systems.
+
+### Key Concepts
+Commands:
+
+Used to perform write operations (e.g., create, update, delete).
+Modify the state of the system.
+Do not return data beyond a simple success or failure response.
