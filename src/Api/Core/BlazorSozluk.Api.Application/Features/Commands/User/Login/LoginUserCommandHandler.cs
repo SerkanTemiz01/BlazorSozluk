@@ -15,19 +15,19 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlazorSozluk.Api.Application.Features.Commands.User
+namespace BlazorSozluk.Api.Application.Features.Commands.User.Login
 {
     public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, LoginUserViewModel>
     {
         private readonly IUserRepository userRepository;
         private readonly IMapper mapper;
-        private readonly IConfiguration configuraiton;
+        private readonly IConfiguration configuration;
 
-        public LoginUserCommandHandler(IUserRepository userRepository, IMapper mapper, IConfiguration configuraiton)
+        public LoginUserCommandHandler(IUserRepository userRepository, IMapper mapper, IConfiguration configuration)
         {
             this.userRepository = userRepository;
             this.mapper = mapper;
-            this.configuraiton = configuraiton;
+            this.configuration=configuration;
         }
 
         public async Task<LoginUserViewModel> Handle(LoginUserCommand request, CancellationToken cancellationToken)
@@ -42,7 +42,7 @@ namespace BlazorSozluk.Api.Application.Features.Commands.User
             if (dbUser.Password != pass)
                 throw new DatabaseValidationException("Password is wrong!");
 
-            if(!dbUser.EmailConfirmed)
+            if (!dbUser.EmailConfirmed)
                 throw new DatabaseValidationException("Email is not confirmed yet!");
 
             var result = mapper.Map<LoginUserViewModel>(dbUser);
@@ -54,7 +54,7 @@ namespace BlazorSozluk.Api.Application.Features.Commands.User
                 new Claim(ClaimTypes.Name, dbUser.UserName),
                 new Claim(ClaimTypes.GivenName, dbUser.FirstName),
                 new Claim(ClaimTypes.Surname, dbUser.LastName)
-                
+
             };
 
             result.Token = GenerateToken(claims);
@@ -63,11 +63,11 @@ namespace BlazorSozluk.Api.Application.Features.Commands.User
         }
         public string GenerateToken(Claim[] claims)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuraiton["AuthConfig:Secret"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["AuthConfig:Secret"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expiry = DateTime.Now.AddDays(10);
 
-            var token=new JwtSecurityToken(
+            var token = new JwtSecurityToken(
                 claims: claims,
                 expires: expiry,
                 signingCredentials: creds,

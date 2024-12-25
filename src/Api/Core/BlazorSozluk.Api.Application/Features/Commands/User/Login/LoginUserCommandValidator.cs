@@ -6,16 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlazorSozluk.Api.Application.Features.Commands.User
+namespace BlazorSozluk.Api.Application.Features.Commands.User.Login
 {
-    public class LoginUserCommandValidator:AbstractValidator<LoginUserCommand>
+    public class LoginUserCommandValidator : AbstractValidator<LoginUserCommand>
     {
         public LoginUserCommandValidator()
         {
-             RuleFor(x => x.EmailAdress)
-                .NotNull()
-                .EmailAddress(FluentValidation.Validators.EmailValidationMode.AspNetCoreCompatible)
-                .WithMessage("{PropertyName} not a valid email adress");
+            RuleFor(x => x.EmailAdress)
+               .NotNull()
+               .EmailAddress(FluentValidation.Validators.EmailValidationMode.AspNetCoreCompatible)
+               .WithMessage("{PropertyName} not a valid email adress");
 
             RuleFor(x => x.Password)
                 .NotNull()

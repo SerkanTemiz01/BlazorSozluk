@@ -1,4 +1,5 @@
-﻿using BlazorSozluk.Api.Application.Interfaces.Repositories;
+﻿using AutoMapper;
+using BlazorSozluk.Api.Application.Interfaces.Repositories;
 using BlazorSozluk.Api.Infrastructure.Persistence.Context;
 using BlazorSozluk.Api.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,7 @@ namespace BlazorSozluk.Api.Infrastructure.Persistence.Extensions
     {
         public static IServiceCollection AddInfrastructureRegistration(this IServiceCollection services,IConfiguration configuration)
         {
-            var connStr = configuration["BlazorSozlukDbConnectionString"].ToString();
+            var connStr = configuration.GetConnectionString("BlazorSozlukDbConnectionString");
             services.AddDbContext<BlazorSozlukContext>(conf =>
             {
                 
@@ -29,6 +30,8 @@ namespace BlazorSozluk.Api.Infrastructure.Persistence.Extensions
             services.AddScoped<IUserRepository,UserRepository>();
             services.AddScoped<IEntryRepository, EntryRepository>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IEntryCommentRepository, EntryCommentRepository>();
+            services.AddScoped<IEmailConfirmationRepository, EmailConfirmationRepository>();
 
             return services;
         }
