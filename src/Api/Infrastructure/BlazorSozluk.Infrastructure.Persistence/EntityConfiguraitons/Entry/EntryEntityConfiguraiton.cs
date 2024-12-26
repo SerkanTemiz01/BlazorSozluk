@@ -16,7 +16,7 @@ public class EntryEntityConfiguraiton:BaseEntityConfiguration<Api.Domain.Models.
         base.Configure(builder);
         builder.ToTable("entry",BlazorSozlukContext.DEFAULT_SCHEMA);
 
-        builder.HasOne(i => i.CreatedUser)
+        builder.HasOne(i => i.CreatedBy)
             .WithMany(i => i.Entries)
             .HasForeignKey(i => i.CreatedById);
     }

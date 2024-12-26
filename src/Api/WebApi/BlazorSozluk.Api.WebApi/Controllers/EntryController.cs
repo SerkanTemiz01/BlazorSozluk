@@ -1,4 +1,5 @@
 ﻿using BlazorSozluk.Api.Application.Features.Queries.GetEntries;
+using BlazorSozluk.Api.Application.Features.Queries.GetMainPageEntries;
 using BlazorSozluk.Common.Models.RequestModels;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -23,6 +24,15 @@ namespace BlazorSozluk.Api.WebApi.Controllers
             var result = await mediator.Send(query);
             return Ok(result);
         }
+
+        [HttpGet]
+        [Route("MainPageEntries")]
+        public async Task<IActionResult> GetMainPageEntries(int page,int pageSize)
+        {
+            var result = await mediator.Send(new GetMainPageEntriesQuery(UserId,page,pageSize));
+            return Ok(result);
+        }
+
 
         [HttpPost]
         [Route("CreateEntry")]

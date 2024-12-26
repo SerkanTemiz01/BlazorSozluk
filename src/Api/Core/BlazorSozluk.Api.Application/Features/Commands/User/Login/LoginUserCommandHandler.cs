@@ -54,7 +54,7 @@ namespace BlazorSozluk.Api.Application.Features.Commands.User.Login
                 new Claim(ClaimTypes.Name, dbUser.UserName),
                 new Claim(ClaimTypes.GivenName, dbUser.FirstName),
                 new Claim(ClaimTypes.Surname, dbUser.LastName)
-
+                
             };
 
             result.Token = GenerateToken(claims);

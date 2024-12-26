@@ -22,7 +22,8 @@ namespace BlazorSozluk.Api.Application.Mapping
 
             CreateMap<User, UpdateUserCommand>()
                 .ReverseMap();
-
+            CreateMap<User, UserDetailViewModel>()
+               .ReverseMap();
             CreateMap<CreateEntryCommand,Entry>()
                 .ReverseMap();
             CreateMap<Entry,GetEntriesViewModel>()
