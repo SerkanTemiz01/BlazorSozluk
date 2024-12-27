@@ -20,11 +20,12 @@ namespace BlazorSozluk.Api.Application.Features.Queries.GetUserDetail
         {
             Domain.Models.User dbUser = null;
 
-            if(request.UserId!=Guid.Empty)
-                dbUser=await userRepository.GetByIdAsync(request.UserId);
-            else if(!string.IsNullOrEmpty(request.UserName))
-                dbUser=await userRepository.GetSingleAsync(x=>x.UserName==request.UserName);
-
+            if (request.UserId != Guid.Empty)
+                dbUser = await userRepository.GetByIdAsync(request.UserId);
+            else if (!string.IsNullOrEmpty(request.UserName))
+                dbUser = await userRepository.GetSingleAsync(x => x.UserName == request.UserName);
+            else
+                throw new ArgumentException("User could not found!");
             //TODO if both are empty ,throw new exception
 
             return mapper.Map<UserDetailViewModel>(dbUser);

@@ -10,7 +10,7 @@ namespace BlazorSozluk.Api.Application.Features.Queries.GetEntryDetail
 {
     public class GetEntryDetailQuery:IRequest<GetEntryDetailViewModel>
     {
-        public GetEntryDetailQuery(Guid entryId, Guid? userId, int page, int pageSize) 
+        public GetEntryDetailQuery(Guid entryId, Guid? userId) 
         {
             EntryId = entryId;
             UserId = userId;

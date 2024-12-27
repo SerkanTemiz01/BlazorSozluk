@@ -36,7 +36,7 @@ namespace BlazorSozluk.Api.Application.Features.Commands.User.ChangePassword
 
             dbUser.Password=PasswordEncyptor.Encrypt(request.NewPassword);
 
-            await userRepository.UpdateAsync(dbUser);
+            await userRepository.UpdateAsync(dbUser);   
 
             return true;
         }
