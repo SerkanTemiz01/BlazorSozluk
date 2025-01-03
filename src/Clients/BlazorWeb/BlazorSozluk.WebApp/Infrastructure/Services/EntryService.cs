@@ -1,11 +1,12 @@
 ﻿using BlazorSozluk.Common.Models.Page;
 using BlazorSozluk.Common.Models.Queries;
 using BlazorSozluk.Common.Models.RequestModels;
+using BlazorSozluk.WebApp.Infrastructure.Services.Interfaces;
 using System.Net.Http.Json;
 
 namespace BlazorSozluk.WebApp.Infrastructure.Services
 {
-    public class EntryService
+    public class EntryService : IEntryService
     {
         private readonly HttpClient client;
         public EntryService(HttpClient client)
@@ -20,11 +21,11 @@ namespace BlazorSozluk.WebApp.Infrastructure.Services
         {
             return await client.GetFromJsonAsync<GetEntryDetailViewModel>($"/api/Entry/{entryId}");
         }
-        public async Task<PagedViewModel<GetEntryDetailViewModel>> GetMainPageEntries(int page,int pageSize)
+        public async Task<PagedViewModel<GetEntryDetailViewModel>> GetMainPageEntries(int page, int pageSize)
         {
             return await client.GetFromJsonAsync<PagedViewModel<GetEntryDetailViewModel>>($"/api/Entry/MainPageEntries?page={page}&pageSize={pageSize}");
         }
-        public async Task<PagedViewModel<GetEntryDetailViewModel>> GetProfilePageEntries(int page, int pageSize,string userName=null)
+        public async Task<PagedViewModel<GetEntryDetailViewModel>> GetProfilePageEntries(int page, int pageSize, string userName = null)
         {
             return await client.GetFromJsonAsync<PagedViewModel<GetEntryDetailViewModel>>($"/api/Entry/UserEntries?userName={userName}&page={page}&pageSize={pageSize}");
         }
@@ -35,7 +36,7 @@ namespace BlazorSozluk.WebApp.Infrastructure.Services
         public async Task<Guid> CreateEntry(CreateEntryCommand command)
         {
             var response = await client.PostAsJsonAsync("/api/Entry/CreateEntry", command);
-            if(!response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode)
                 return Guid.Empty;
 
             return await response.Content.ReadFromJsonAsync<Guid>();

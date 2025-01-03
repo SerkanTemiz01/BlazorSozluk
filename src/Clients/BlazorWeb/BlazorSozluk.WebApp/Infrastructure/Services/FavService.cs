@@ -1,6 +1,8 @@
-﻿namespace BlazorSozluk.WebApp.Infrastructure.Services
+﻿using BlazorSozluk.WebApp.Infrastructure.Services.Interfaces;
+
+namespace BlazorSozluk.WebApp.Infrastructure.Services
 {
-    public class FavService
+    public class FavService : IFavService
     {
         private readonly HttpClient client;
 
