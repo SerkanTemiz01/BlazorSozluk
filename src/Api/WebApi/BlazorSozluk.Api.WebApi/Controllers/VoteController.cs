@@ -10,11 +10,11 @@ namespace BlazorSozluk.Api.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VotesController : BaseController
+    public class VoteController : BaseController
     {
         private readonly IMediator mediator;
 
-        public VotesController(IMediator mediator)
+        public VoteController(IMediator mediator)
         {
             this.mediator = mediator;
         }
