@@ -15,7 +15,18 @@ namespace BlazorSozluk.WebApp.Infrastructure.Services
         }
         public async Task<List<GetEntriesViewModel>> GetEntries()
         {
-            return await client.GetFromJsonAsync<List<GetEntriesViewModel>>("/api/Entry?todayEntries=false&count=30");
+            try
+            {
+                var result = await client.GetFromJsonAsync<List<GetEntriesViewModel>>("/api/entry?todaysEnties=false&count=30");
+                return result.ToList();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
+            
         }
         public async Task<GetEntryDetailViewModel> GetEntryDetail(Guid entryId)
         {

@@ -14,8 +14,8 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddHttpClient("WebApiClient", client =>
 {
-    string apiUrl = builder.Configuration["ApiUrl"];    
-    client.BaseAddress = new Uri(apiUrl);
+    //string apiUrl = builder.Configuration["applicationUrl"];    
+    client.BaseAddress = new Uri("https://localhost:5001");
 });
 
 builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("WebApiClient"));
